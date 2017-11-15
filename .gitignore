@@ -1,0 +1,6 @@
+Library/
+ProjectSettings/
+Temp/
+*.meta
+Assets/VSCode/
+.vscode/
