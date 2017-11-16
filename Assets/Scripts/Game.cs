@@ -47,8 +47,8 @@ public class Game :MonoBehaviour{
                     if (chess != null)
                     {
                         chess.GetComponent<Transform>().SetParent(ChessBoard.GetComponent<Transform>(),true);
-                        Vector3 pos = new Vector3(x*30  -245 + 35,y*30-245+35 );
-                        chess.transform.position = pos +parentPos;
+                        Vector3 pos = new Vector3(x*35  -245 ,y*35-245 );
+                        chess.transform.localPosition = pos ;
                         EventTriggerListener.Get(chess.gameObject).onClick = OnChessClick;   
                         chess.GetComponent<Chess>().posX = x;
                         chess.GetComponent<Chess>().posY = y;
@@ -155,9 +155,15 @@ public class Game :MonoBehaviour{
 
         // 判断横向
         int fiveCount  = 0;
+        Chess nowTouchChess = touchChess.GetComponent<Chess>();
+        Debug.Log("judgeOver  x0:=" + x0 + "  y0:="+y0 + " Status:=" + nowTouchChess.chessStatus);
+
+
         for (int x = 0; x < MAX_LENGTH; x++)
         {
-            if (chessList[y0 *MAX_LENGTH + x].GetComponent<Chess>().chessStatus == touchChess.GetComponent<Chess>().chessStatus)
+            Chess temp = chessList[x0 *MAX_LENGTH + x].GetComponent<Chess>();
+            Debug.Log("判断横向  now := "+ nowTouchChess.chessStatus+"  "+"temp:"+temp.chessStatus+" x:= " + x);
+            if (temp.chessStatus == nowTouchChess.chessStatus)
             {
                 fiveCount ++;
                 if (judgeOver(fiveCount)){return ;}
@@ -172,7 +178,9 @@ public class Game :MonoBehaviour{
         fiveCount  = 0;
         for (int y = 0; y < MAX_LENGTH; y++)
         {
-            if (chessList[y0 *MAX_LENGTH + x0].GetComponent<Chess>().chessStatus == touchChess.GetComponent<Chess>().chessStatus)
+            Chess temp = chessList[y *MAX_LENGTH + y0].GetComponent<Chess>();
+            // Debug.Log("判断纵向  now := "+ nowTouchChess.chessStatus+"  "+"temp:"+temp.chessStatus+" y:= " + y);
+            if (temp.GetComponent<Chess>().chessStatus == nowTouchChess.chessStatus)
             {
                 fiveCount ++;
                 if (judgeOver(fiveCount)){return ;}
@@ -190,7 +198,9 @@ public class Game :MonoBehaviour{
             if(f+x < 0 || f+x > MAX_LENGTH - 1){
                 continue;
             }
-            if (chessList[(f+x) *MAX_LENGTH + x].GetComponent<Chess>().chessStatus == touchChess.GetComponent<Chess>().chessStatus)
+            Chess temp = chessList[ x*MAX_LENGTH + (f+x)].GetComponent<Chess>();
+            // Debug.Log("判断斜上  now := "+ nowTouchChess.chessStatus+"  "+"temp:"+temp.chessStatus+" x:= " + x);
+            if (temp.chessStatus == nowTouchChess.chessStatus)
             {
                 fiveCount ++;
                 if (judgeOver(fiveCount)){return ;}
@@ -205,10 +215,12 @@ public class Game :MonoBehaviour{
         f = y0 + x0;
         for (int x = 0; x < MAX_LENGTH; x++)
         {
-            if(f+x < 0 || f+x > MAX_LENGTH - 1){
+            if(f-x < 0 || f-x > MAX_LENGTH - 1){
                 continue;
             }
-            if (chessList[(f-x) *MAX_LENGTH + x].GetComponent<Chess>().chessStatus == touchChess.GetComponent<Chess>().chessStatus)
+            Chess temp = chessList[x *MAX_LENGTH + (f-x)].GetComponent<Chess>();
+            // Debug.Log("判断斜下  now := "+ nowTouchChess.chessStatus+"  "+"temp:"+temp.chessStatus+" x:= " + x);
+            if (temp.chessStatus == nowTouchChess.chessStatus)
             {
                 fiveCount ++;
                 if (judgeOver(fiveCount)){return ;}
