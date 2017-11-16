@@ -136,16 +136,6 @@ public class Game :MonoBehaviour{
             }
             Debug.Log("OnChessClick" + posX + "    "+ posY);
         }
-        
-
-        // if(self.gameState ===  'black' && this.getComponent(cc.Sprite).spriteFrame === null){
-        //                 this.getComponent(cc.Sprite).spriteFrame = self.blackSpriteFrame;//下子后添加棋子图片使棋子显示
-        //                 self.judgeOver();
-        //                 if(self.gameState == 'white'){
-        //                     self.scheduleOnce(function(){self.ai()},1);//延迟一秒电脑下棋
-        //                 }
-        //             }
-        
     }
 
     private void judgeOver()
@@ -156,13 +146,10 @@ public class Game :MonoBehaviour{
         // 判断横向
         int fiveCount  = 0;
         Chess nowTouchChess = touchChess.GetComponent<Chess>();
-        Debug.Log("judgeOver  x0:=" + x0 + "  y0:="+y0 + " Status:=" + nowTouchChess.chessStatus);
-
 
         for (int x = 0; x < MAX_LENGTH; x++)
         {
             Chess temp = chessList[x0 *MAX_LENGTH + x].GetComponent<Chess>();
-            Debug.Log("判断横向  now := "+ nowTouchChess.chessStatus+"  "+"temp:"+temp.chessStatus+" x:= " + x);
             if (temp.chessStatus == nowTouchChess.chessStatus)
             {
                 fiveCount ++;
@@ -179,7 +166,6 @@ public class Game :MonoBehaviour{
         for (int y = 0; y < MAX_LENGTH; y++)
         {
             Chess temp = chessList[y *MAX_LENGTH + y0].GetComponent<Chess>();
-            // Debug.Log("判断纵向  now := "+ nowTouchChess.chessStatus+"  "+"temp:"+temp.chessStatus+" y:= " + y);
             if (temp.GetComponent<Chess>().chessStatus == nowTouchChess.chessStatus)
             {
                 fiveCount ++;
@@ -199,7 +185,6 @@ public class Game :MonoBehaviour{
                 continue;
             }
             Chess temp = chessList[ x*MAX_LENGTH + (f+x)].GetComponent<Chess>();
-            // Debug.Log("判断斜上  now := "+ nowTouchChess.chessStatus+"  "+"temp:"+temp.chessStatus+" x:= " + x);
             if (temp.chessStatus == nowTouchChess.chessStatus)
             {
                 fiveCount ++;
@@ -219,7 +204,6 @@ public class Game :MonoBehaviour{
                 continue;
             }
             Chess temp = chessList[x *MAX_LENGTH + (f-x)].GetComponent<Chess>();
-            // Debug.Log("判断斜下  now := "+ nowTouchChess.chessStatus+"  "+"temp:"+temp.chessStatus+" x:= " + x);
             if (temp.chessStatus == nowTouchChess.chessStatus)
             {
                 fiveCount ++;
